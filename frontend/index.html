@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <style>
+      /* Beautiful Gradient Background Animation */
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(-45deg, #ff6ec4, #7873f5, #23a6d5, #ff4b1f);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        color: white;
+      }
+
+      @keyframes gradientBG {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Main Container */
+      main {
+        background: rgba(0, 0, 0, 0.5);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        text-align: center;
+        max-width: 500px;
+        width: 90%;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      input {
+        padding: 10px 15px;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 10px;
+        width: 100%;
+        margin-bottom: 20px;
+        box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.2);
+      }
+
+      button {
+        padding: 12px 24px;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #ff416c, #ff4b2b);
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.3s ease;
+        box-shadow: 0 0 10px #ff416c;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px #ff4b2b;
+      }
+
+      #greeting {
+        margin-top: 25px;
+        padding: 20px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid #fff;
+        animation: fadeIn 0.7s ease-out;
+        font-weight: bold;
+        display: none;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+    <script type="module">
+      import { backend } from 'declarations/backend';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('form');
+        const greetingBox = document.getElementById('greeting');
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const name = document.getElementById('name').value.trim();
+          if (!name) return;
+          const greeting = await backend.greet(name);
+          greetingBox.innerText = greeting;
+          greetingBox.style.display = 'block';
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <main>
+      <form>
+        <label for="name">I am Volodymyr Havryliuk! Enter your name:</label>
+        <input id="name" alt="Name" type="text" placeholder="e.g., Satoshi Nakamoto" />
+        <button type="submit">Click Me!</button>
+      </form>
+      <section id="greeting"></section>
+    </main>
+  </body>
+</html>
